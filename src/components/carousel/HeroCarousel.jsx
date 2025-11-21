@@ -1,7 +1,7 @@
 import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import { img } from "./images/data"; // adjust path if needed
+import { img } from "./images/data"; 
 
 const HeroCarousel = () => {
   return (
@@ -18,7 +18,7 @@ const HeroCarousel = () => {
         emulateTouch={true}
         stopOnHover={false}
         dynamicHeight={false}
-        // ⭐ Fade effect (Amazon-style)
+        
         animationHandler="fade"
         renderArrowPrev={(onClick, hasPrev, label) =>
           hasPrev && (
