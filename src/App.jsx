@@ -1,10 +1,11 @@
 import React from 'react'
-import Header from './components/Header/Header'
+// import Header from './components/Header/Header'
+import HeaderMain from './components/Header/HeaderMain'
 
 const App = () => {
   return (
     <div>
-      <Header/>
+        <HeaderMain/>
     </div>
   )
 }
