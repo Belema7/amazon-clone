@@ -14,6 +14,7 @@ const HeroCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showArrows={true}
+        showIndicators={false}
         swipeable={true}
         emulateTouch={true}
         stopOnHover={false}
