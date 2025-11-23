@@ -7,7 +7,7 @@ const HeroCarousel = () => {
   return (
     <div className="relative w-full">
       <Carousel
-        autoPlay
+        autoPlay={false}
         infiniteLoop
         interval={3500}
         transitionTime={800}
