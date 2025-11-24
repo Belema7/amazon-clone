@@ -56,7 +56,7 @@ const HeroCarousel = () => {
       </Carousel>
 
       {/* ⭐ Amazon bottom fade overlay */}
-      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#EAEDED] to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 w-full h-40 bg-linear-to-t from-[#EAEDED] to-transparent pointer-events-none"></div>
     </div>
   );
 };
