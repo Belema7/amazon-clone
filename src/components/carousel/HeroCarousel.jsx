@@ -26,7 +26,7 @@ const HeroCarousel = () => {
             <button
               onClick={onClick}
               title={label}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full z-10"
+              className="absolute left-4 top-1/4 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full z-10"
             >
               ❮
             </button>
@@ -37,7 +37,7 @@ const HeroCarousel = () => {
             <button
               onClick={onClick}
               title={label}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full z-10"
+              className="absolute right-4 top-1/4 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full z-10"
             >
               ❯
             </button>

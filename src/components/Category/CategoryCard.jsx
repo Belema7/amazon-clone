@@ -5,7 +5,7 @@ const CategoryCard = ({ data }) => {
     
   return (
     <Link to={`/category/${data.name}`}>
-      <div className="bg-white p-4 rounded shadow hover:shadow-lg transition border mt-[-54]">
+      <div className="bg-white p-4 rounded shadow hover:shadow-lg transition border mt-[-250px]">
         
         <h2 className="text-lg font-semibold mb-3">{data.title}</h2>
         
