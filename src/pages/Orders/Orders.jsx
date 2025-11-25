@@ -1,10 +1,11 @@
 import React from 'react'
+import LayOut from '../../components/LayOut/LayOut'
 
 const Orders = () => {
     return (
-        <div>
+        <LayOut>
             <p>This is my orders</p>
-        </div>
+        </LayOut>
     )
 }
 

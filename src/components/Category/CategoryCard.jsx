@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CategoryCard = ({ data }) => {
   return (
-    <Link to={`/category/${data.slug}`} className="block">
+    <Link to={`/category/${data.name}`} className="block">
       <div
         className="
           bg-white

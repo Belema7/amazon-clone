@@ -4,16 +4,18 @@ import HeaderMain from './components/Header/HeaderMain'
 import HeroCarousel from './components/carousel/HeroCarousel'
 import Category from './components/Category/Category'
 import Product from './components/Product/Product'
+import Routing from './Routing'
 
 
 
 const App = () => {
   return (
     <div>
-        <HeaderMain/>
+        {/* <HeaderMain/>
         <HeroCarousel/>
         <Category/>
-        <Product/>
+        <Product/> */}
+        <Routing/>
     </div>
   )
 }

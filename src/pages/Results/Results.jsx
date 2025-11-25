@@ -1,10 +1,13 @@
 import React from 'react'
+import LayOut from '../../components/LayOut/LayOut'
+import { useParams } from 'react-router-dom'
 
 const Results = () => {
+    const {categoryName} = useParams();
     return (
-        <div>
-            <p>This is results page</p>
-        </div>
+        <LayOut>
+            
+        </LayOut>
     )
 }
 

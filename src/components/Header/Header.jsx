@@ -77,7 +77,7 @@ const Header = () => {
             
             {/* Account & Lists */}
             <NavLink 
-              to="/account" 
+              to="/auth" 
               className={({ isActive }) => 
                 `hidden sm:block hover:border border-white px-2 py-1.5 rounded-sm transition-all ${isActive ? 'border border-white' : ''}`
               }
