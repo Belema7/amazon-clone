@@ -3,6 +3,7 @@ import React from 'react'
 import HeaderMain from './components/Header/HeaderMain'
 import HeroCarousel from './components/carousel/HeroCarousel'
 import Category from './components/Category/Category'
+import Product from './components/Product/Product'
 
 
 
@@ -12,6 +13,7 @@ const App = () => {
         <HeaderMain/>
         <HeroCarousel/>
         <Category/>
+        <Product/>
     </div>
   )
 }
