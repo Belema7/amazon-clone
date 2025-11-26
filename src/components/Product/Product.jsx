@@ -4,12 +4,24 @@ import ProductCard from "./ProductCard";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
+  const [isloading, setIsloading] = useState(false)
 
   useEffect(() => {
-    axios.get("https://fakestoreapi.com/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+  setIsloading(true);
+
+  axios.get("https://fakestoreapi.com/products")
+    .then((res) => {
+      setProducts(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      setIsloading(false); // runs AFTER request finishes
+    });
+
+}, []);
+
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 py-10 bg-gray-100 min-h-screen">
@@ -36,9 +48,13 @@ const Product = () => {
         gap-6
       "
       >
-        {products.map((singleProduct) => (
-          <ProductCard key={singleProduct.id} product={singleProduct} />
-        ))}
+        {!isloading && products.length>0 ? (
+           products.map((singleProduct) => (
+            <ProductCard key={singleProduct.id} product={singleProduct} />
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
 
     </div>
