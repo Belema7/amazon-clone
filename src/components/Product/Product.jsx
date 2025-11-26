@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from "./ProductCard";
+import Loader from "../Loader/Loader";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
-  const [isloading, setIsloading] = useState(false)
+  const [isloading, setIsloading] = useState(false);
 
   useEffect(() => {
-  setIsloading(true);
+    setIsloading(true);
 
-  axios.get("https://fakestoreapi.com/products")
-    .then((res) => {
-      setProducts(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      setIsloading(false); // runs AFTER request finishes
-    });
-
-}, []);
-
+    axios.get("https://fakestoreapi.com/products")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsloading(false);
+      });
+  }, []);
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 py-10 bg-gray-100 min-h-screen">
+    <div className="max-w-screen-2xl mx-auto px-4 py-10 bg-gray-100 min-h-screen text-center">
       
       {/* Section Header */}
       <div className="mb-6">
@@ -36,26 +35,25 @@ const Product = () => {
         </p>
       </div>
 
-      {/* Products Grid */}
-      <div
-        className="
-        grid 
-        grid-cols-1 
-        sm:grid-cols-2 
-        md:grid-cols-3 
-        lg:grid-cols-4 
-        xl:grid-cols-5 
-        gap-6
-      "
-      >
-        {!isloading && products.length>0 ? (
-           products.map((singleProduct) => (
+      {/* Conditional Rendering */}
+      {isloading ? (
+        <Loader/>
+      ) : (
+        /* Products Grid */
+        <div className="
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          md:grid-cols-3 
+          lg:grid-cols-4 
+          xl:grid-cols-5 
+          gap-6
+        ">
+          {products.map((singleProduct) => (
             <ProductCard key={singleProduct.id} product={singleProduct} />
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
     </div>
   );
