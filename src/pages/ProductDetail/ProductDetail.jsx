@@ -33,7 +33,12 @@ const ProductDetail = () => {
         <Loader />
       ) : (
         Object.keys(productDetail).length > 0 && (
-          <ProductDetailsCard productDetail={productDetail} />
+          <ProductDetailsCard 
+          productDetail={productDetail} 
+          flex={true}
+          renderDecs={true}
+          renderAdd={true}
+          />
         )
       )}
     </LayOut>

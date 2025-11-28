@@ -4,7 +4,8 @@ import LowerHeader from './LowerHeader'
 
 const HeaderMain = () => {
   return (
-    <div>
+    <div className="sticky top-0 z-[100]"
+>
       <Header/>
       <LowerHeader/>
     </div>

@@ -44,7 +44,12 @@ const Results = () => {
           "
         >
           {results?.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+            key={product.id} 
+            product={product} 
+            renderDecs={false}
+            renderAdd={true}
+            />
           ))}
         </div>
 

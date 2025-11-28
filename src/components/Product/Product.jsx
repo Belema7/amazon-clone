@@ -50,7 +50,7 @@ const Product = () => {
           gap-6
         ">
           {products.map((singleProduct) => (
-            <ProductCard key={singleProduct.id} product={singleProduct} />
+            <ProductCard key={singleProduct.id} product={singleProduct} renderAdd={true} />
           ))}
         </div>
       )}

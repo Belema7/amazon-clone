@@ -1,5 +1,5 @@
 import { NavLink, Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { 
   MapPin, 
   Search, 
@@ -7,10 +7,13 @@ import {
   ShoppingCart,
   Menu 
 } from 'lucide-react';
+import { DataContext, DataProvider } from '../DataProvider/DataProvider';
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
+  const[{basket}, dispatch] = useContext(DataContext)
+  console.log(basket)
   return (
     <>
       {/* Top Black Bar */}
@@ -109,7 +112,7 @@ const Header = () => {
               <div className="relative">
                 <ShoppingCart size={32} strokeWidth={1.5} />
                 <span className="absolute -top-1 -right-2 bg-[#ff9900] text-[#131921] font-bold rounded-full w-5 h-5 text-xs flex items-center justify-center">
-                  0
+                  {basket.length}
                 </span>
               </div>
               <span className="hidden sm:block font-bold text-sm ml-1 mt-2">Cart</span>
