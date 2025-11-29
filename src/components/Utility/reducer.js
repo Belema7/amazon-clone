@@ -56,6 +56,11 @@ export const reducer = (state = initialState, action) => {
                         : item
                 )
             };
+        case Type.SET_USER: 
+            return {
+                ...state,
+                user: action.user
+            }
 
         default:
             return state;
