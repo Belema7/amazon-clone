@@ -1,4 +1,4 @@
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 import { 
   MapPin, 
@@ -7,19 +7,32 @@ import {
   ShoppingCart,
   Menu 
 } from 'lucide-react';
-import { DataContext, DataProvider } from '../DataProvider/DataProvider';
+import { DataContext } from '../DataProvider/DataProvider';
+import { auth } from '../Utility/firebase';
+import { signOut } from 'firebase/auth';
+import { Type } from '../Utility/action.type';
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [{ basket, user }, dispatch] = useContext(DataContext);
+  const navigate = useNavigate();
 
-  const[{basket}, dispatch] = useContext(DataContext)
-  console.log(basket)
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      dispatch({ type: Type.SET_USER, user: null });
+      navigate("/"); // optional: redirect to home
+    } catch (err) {
+      console.error("Sign out error:", err);
+    }
+  };
+
   return (
     <>
       {/* Top Black Bar */}
       <header className="bg-[#FF6200] text-white">
         <div className="flex items-center justify-between px-2 sm:px-4 py-2 max-w-screen-2xl mx-auto">
-          
+
           {/* Left Section: Logo + Delivery */}
           <div className="flex items-center space-x-2 sm:space-x-4">
             {/* Mobile Menu Button */}
@@ -79,17 +92,34 @@ const Header = () => {
           <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-4">
             
             {/* Account & Lists */}
-            <NavLink 
-              to="/auth" 
-              className={({ isActive }) => 
-                `hidden sm:block hover:border border-white px-2 py-1.5 rounded-sm transition-all ${isActive ? 'border border-white' : ''}`
-              }
-            >
-              <p className="text-xs text-gray-300">Hello, sign in</p>
-              <p className="font-bold text-sm flex items-center">
-                Account & Lists <ChevronDown size={14} className="inline ml-1" />
-              </p>
-            </NavLink>
+            {user ? (
+              <div className="hidden sm:flex flex-col px-2 py-1.5 border border-white rounded-sm cursor-pointer">
+                <p className="text-xs text-gray-300">Hello, {user?.email?.split("@")[0]}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm flex items-center">
+                    Account & Lists <ChevronDown size={14} className="inline ml-1" />
+                  </span>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-xs ml-2 text-gray-200 hover:text-gray-100"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <NavLink 
+                to="/auth" 
+                className={({ isActive }) => 
+                  `hidden sm:block hover:border border-white px-2 py-1.5 rounded-sm transition-all ${isActive ? 'border border-white' : ''}`
+                }
+              >
+                <p className="text-xs text-gray-300">Hello, sign in</p>
+                <p className="font-bold text-sm flex items-center">
+                  Account & Lists <ChevronDown size={14} className="inline ml-1" />
+                </p>
+              </NavLink>
+            )}
 
             {/* Returns & Orders */}
             <NavLink 
@@ -120,7 +150,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Search Bar - Shows on small screens */}
+        {/* Mobile Search Bar */}
         <div className="sm:hidden px-2 pb-2">
           <div className="flex">
             <input 
@@ -139,10 +169,23 @@ const Header = () => {
       {showMobileMenu && (
         <div className="lg:hidden bg-[#232f3e] text-white p-4">
           <div className="space-y-4">
-            <NavLink to="/account" className="block py-2 border-b border-gray-600">
-              <p className="text-sm text-gray-300">Hello, sign in</p>
-              <p className="font-bold">Account & Lists</p>
-            </NavLink>
+            {user ? (
+              <div className="block py-2 border-b border-gray-600">
+                <p className="text-sm text-gray-300">Hello, {user.email}</p>
+                <button
+                  onClick={handleSignOut}
+                  className="font-bold text-sm mt-1 text-gray-200 hover:text-gray-100"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <NavLink to="/auth" className="block py-2 border-b border-gray-600">
+                <p className="text-sm text-gray-300">Hello, sign in</p>
+                <p className="font-bold">Account & Lists</p>
+              </NavLink>
+            )}
+
             <NavLink to="/orders" className="block py-2 border-b border-gray-600">
               <p className="text-sm text-gray-300">Returns</p>
               <p className="font-bold">& Orders</p>

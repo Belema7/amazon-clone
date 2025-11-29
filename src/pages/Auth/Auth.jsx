@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../../assets/amazon.avif';
 import { auth } from '../../components/Utility/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -9,34 +9,55 @@ import { Type } from '../../components/Utility/action.type';
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [{user}, dispatch] = useContext(DataContext)
+  const [loading, setLoading] = useState({
+    signIn: false,
+    signUp: false,
+  });
+  const [error, setError] = useState("");
 
-  console.log(user)
+  const [{ user }, dispatch] = useContext(DataContext);
+  const navigate = useNavigate();
 
   // Sign In handler
   const handleSignIn = async (e) => {
     e.preventDefault();
+    setLoading({ ...loading, signIn: true });
+    setError("");
+
     try {
       const userInfo = await signInWithEmailAndPassword(auth, email, password);
       dispatch({
         type: Type.SET_USER,
         user: userInfo.user
-      })
-    } catch (error) {
-      console.error("Sign in error:", error);
+      });
+      setEmail("");
+      setPassword("");
+      navigate("/"); // navigate to home
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading({ ...loading, signIn: false });
     }
   };
 
   // Sign Up handler
   const handleSignUp = async () => {
+    setLoading({ ...loading, signUp: true });
+    setError("");
+
     try {
       const userInfo = await createUserWithEmailAndPassword(auth, email, password);
       dispatch({
         type: Type.SET_USER,
         user: userInfo.user
-      })
-    } catch (error) {
-      console.error("Sign up error:", error);
+      });
+      setEmail("");
+      setPassword("");
+      navigate("/"); // navigate to home
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading({ ...loading, signUp: false });
     }
   };
 
@@ -52,6 +73,10 @@ const Auth = () => {
         {/* Form */}
         <div className="border border-gray-300 rounded-md p-5 bg-white">
           <h1 className="text-2xl font-normal text-gray-900 mb-4">Sign in</h1>
+
+          {/* Show error message */}
+          {error && <p className="text-xs text-red-600 mb-2">{error}</p>}
+
           <form onSubmit={handleSignIn}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -83,9 +108,10 @@ const Auth = () => {
 
             <button 
               type="submit"
-              className="w-full bg-[#ffd814] hover:bg-[#f7ca00] text-gray-900 font-medium py-2 rounded-md shadow-sm transition-all duration-200 hover:shadow-md mb-4"
+              disabled={loading.signIn}
+              className={`w-full ${loading.signIn ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#ffd814] hover:bg-[#f7ca00]'} text-gray-900 font-medium py-2 rounded-md shadow-sm transition-all duration-200 hover:shadow-md mb-4`}
             >
-              Continue
+              {loading.signIn ? "Please wait..." : "Continue"}
             </button>
           </form>
 
@@ -113,9 +139,10 @@ const Auth = () => {
         <button 
           type="button"
           onClick={handleSignUp}
-          className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-2 rounded-md border border-gray-300 shadow-sm transition-all duration-200 hover:shadow-md"
+          disabled={loading.signUp}
+          className={`w-full ${loading.signUp ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-100 hover:bg-gray-200'} text-gray-900 font-medium py-2 rounded-md border border-gray-300 shadow-sm transition-all duration-200 hover:shadow-md`}
         >
-          Create your Amazon account
+          {loading.signUp ? "Please wait..." : "Create your Amazon account"}
         </button>
 
         {/* Footer Links */}
