@@ -1,11 +1,11 @@
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
-import { 
-  MapPin, 
-  Search, 
-  ChevronDown, 
+import {
+  MapPin,
+  Search,
+  ChevronDown,
   ShoppingCart,
-  Menu 
+  Menu,
 } from 'lucide-react';
 import { DataContext } from '../DataProvider/DataProvider';
 import { auth } from '../Utility/firebase';
@@ -21,43 +21,39 @@ const Header = () => {
     try {
       await signOut(auth);
       dispatch({ type: Type.SET_USER, user: null });
-      navigate("/"); // optional: redirect to home
+      navigate('/');
     } catch (err) {
-      console.error("Sign out error:", err);
+      console.error('Sign out error:', err);
     }
   };
 
   return (
     <>
-      {/* Top Black Bar */}
+      {/* Top Header */}
       <header className="bg-[#FF6200] text-white">
         <div className="flex items-center justify-between px-2 sm:px-4 py-2 max-w-screen-2xl mx-auto">
-
-          {/* Left Section: Logo + Delivery */}
+          {/* Left Section */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Mobile Menu Button */}
-            <button 
+            <button
               className="lg:hidden p-2 hover:border border-white rounded-sm transition-all"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
             >
               <Menu size={20} />
             </button>
 
-            {/* Amazon Logo */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="flex items-center hover:border border-white rounded-sm transition-all p-1"
             >
-              <img 
-                src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" 
-                alt="Amazon Logo" 
+              <img
+                src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
+                alt="Amazon Logo"
                 className="h-6 sm:h-8 w-auto object-contain"
               />
             </Link>
 
-            {/* Delivery Location */}
-            <NavLink 
-              to="/location" 
+            <NavLink
+              to="/location"
               className="hidden sm:flex items-center space-x-1 hover:border border-white px-2 py-1.5 rounded-sm transition-all"
             >
               <MapPin size={18} className="text-gray-200" />
@@ -68,20 +64,22 @@ const Header = () => {
             </NavLink>
           </div>
 
-          {/* Center: Search Bar */}
+          {/* Search Bar */}
           <div className="flex flex-1 max-w-2xl mx-2 sm:mx-4">
             <div className="flex w-full">
-              <select className="hidden sm:block bg-gray-100 text-gray-800 text-xs px-2 py-2.5 rounded-l-md border border-r-0 border-gray-300 hover:bg-gray-200 transition cursor-pointer">
+              <select className="hidden sm:block bg-gray-100 text-gray-800 text-xs px-2 py-2.5 rounded-l-md border border-r-0 border-gray-300 hover:bg-gray-200 cursor-pointer">
                 <option>All</option>
                 <option>All Departments</option>
                 <option>Books</option>
                 <option>Electronics</option>
               </select>
-              <input 
-                type="text" 
-                placeholder="Search Amazon" 
+
+              <input
+                type="text"
+                placeholder="Search Amazon"
                 className="flex-1 px-3 py-2 bg-white text-black text-sm outline-none border border-gray-300"
               />
+
               <button className="bg-[#febd69] hover:bg-[#f3a847] px-3 sm:px-4 rounded-r-md transition-all">
                 <Search size={20} className="text-gray-800" />
               </button>
@@ -90,14 +88,13 @@ const Header = () => {
 
           {/* Right Section */}
           <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-4">
-            
-            {/* Account & Lists */}
+            {/* Account */}
             {user ? (
               <div className="hidden sm:flex flex-col px-2 py-1.5 border border-white rounded-sm cursor-pointer">
-                <p className="text-xs text-gray-300">Hello, {user?.email?.split("@")[0]}</p>
+                <p className="text-xs text-gray-300">Hello, {user?.email?.split('@')[0]}</p>
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-sm flex items-center">
-                    Account & Lists <ChevronDown size={14} className="inline ml-1" />
+                    Account & Lists <ChevronDown size={14} className="ml-1" />
                   </span>
                   <button
                     onClick={handleSignOut}
@@ -108,23 +105,23 @@ const Header = () => {
                 </div>
               </div>
             ) : (
-              <NavLink 
-                to="/auth" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/auth"
+                className={({ isActive }) =>
                   `hidden sm:block hover:border border-white px-2 py-1.5 rounded-sm transition-all ${isActive ? 'border border-white' : ''}`
                 }
               >
                 <p className="text-xs text-gray-300">Hello, sign in</p>
                 <p className="font-bold text-sm flex items-center">
-                  Account & Lists <ChevronDown size={14} className="inline ml-1" />
+                  Account & Lists <ChevronDown size={14} className="ml-1" />
                 </p>
               </NavLink>
             )}
 
-            {/* Returns & Orders */}
-            <NavLink 
-              to="/orders" 
-              className={({ isActive }) => 
+            {/* Orders */}
+            <NavLink
+              to="/orders"
+              className={({ isActive }) =>
                 `hidden sm:block hover:border border-white px-2 py-1.5 rounded-sm transition-all ${isActive ? 'border border-white' : ''}`
               }
             >
@@ -133,9 +130,9 @@ const Header = () => {
             </NavLink>
 
             {/* Cart */}
-            <NavLink 
-              to="/cart" 
-              className={({ isActive }) => 
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
                 `relative flex items-center px-2 py-1.5 rounded-sm transition-all ${isActive ? 'border border-white' : 'hover:border border-white'}`
               }
             >
@@ -150,12 +147,12 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Search Bar */}
+        {/* Mobile Search */}
         <div className="sm:hidden px-2 pb-2">
           <div className="flex">
-            <input 
-              type="text" 
-              placeholder="Search Amazon" 
+            <input
+              type="text"
+              placeholder="Search Amazon"
               className="flex-1 px-3 py-2 bg-white text-black text-sm outline-none border border-gray-300 rounded-l-md"
             />
             <button className="bg-[#febd69] hover:bg-[#f3a847] px-3 rounded-r-md transition-all">
@@ -190,6 +187,7 @@ const Header = () => {
               <p className="text-sm text-gray-300">Returns</p>
               <p className="font-bold">& Orders</p>
             </NavLink>
+
             <NavLink to="/location" className="block py-2 border-b border-gray-600">
               <p className="font-bold">Deliver to Ethiopia</p>
             </NavLink>
