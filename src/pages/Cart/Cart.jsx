@@ -3,6 +3,7 @@ import LayOut from '../../components/LayOut/LayOut'
 import { DataContext } from '../../components/DataProvider/DataProvider'
 import ProductCard from '../../components/Product/ProductCard'
 import { ShoppingCart } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Cart = () => {
   const [{ basket, user }] = useContext(DataContext)
@@ -82,10 +83,11 @@ const Cart = () => {
                   <input type="checkbox" className="rounded text-orange-600" />
                   <span className="text-sm text-gray-900">This order contains a gift</span>
                 </div>
-
+              <Link to="/payments">
                 <button className="w-full bg-[#ffd814] hover:bg-[#f7ca00] text-gray-900 font-medium py-2 rounded-full transition-all duration-200 hover:shadow-lg mb-3">
                   Proceed to checkout
                 </button>
+              </Link>
                 
                 <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-2 rounded-full transition-all duration-200 border border-gray-300">
                   Save for later

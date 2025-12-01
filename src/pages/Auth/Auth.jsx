@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from '../../assets/amazon.avif';
 import { auth } from '../../components/Utility/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -17,6 +17,8 @@ const Auth = () => {
 
   const [{ user }, dispatch] = useContext(DataContext);
   const navigate = useNavigate();
+  const navStateData = useLocation();
+
 
   // Sign In handler
   const handleSignIn = async (e) => {
@@ -32,7 +34,7 @@ const Auth = () => {
       });
       setEmail("");
       setPassword("");
-      navigate("/"); // navigate to home
+      navigate(navStateData?.state?.redirect || "/"); 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -53,7 +55,7 @@ const Auth = () => {
       });
       setEmail("");
       setPassword("");
-      navigate("/"); // navigate to home
+      navigate(navStateData?.state?.redirect || "/"); 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -76,6 +78,14 @@ const Auth = () => {
 
           {/* Show error message */}
           {error && <p className="text-xs text-red-600 mb-2">{error}</p>}
+          { navStateData?.state?.msg && (
+              <small>
+                  <span className="text-xs text-blue-600">
+                    {navStateData?.state?.msg}
+                  </span>
+              </small>
+          )
+          }
 
           <form onSubmit={handleSignIn}>
             <div className="mb-4">
