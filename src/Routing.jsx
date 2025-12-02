@@ -33,3 +33,21 @@ const Routing = () => {
 }
 
 export default Routing
+
+
+{/* <Route 
+        path='/signup' 
+        element={!user ? <Signup /> : <Navigate to="/dashboard" replace />} 
+      /> */}
+
+      {/* Protected Dashboard Routes */}
+      {/* <Route 
+        path='/dashboard' 
+        element={user ? <Dashboard /> : <Navigate to="/login" replace />}
+      >
+        <Route index element={<Navigate to="/dashboard/tasks" replace />} />
+        <Route path='medicineinput' element={<MedicineInput />} />
+        <Route path='tasks' element={<DailyTasks />} />
+        <Route path='aihelp' element={<AiAssistant />} />
+        <Route path='progress' element={<Progress />} />
+      </Route> */}
